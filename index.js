@@ -88,11 +88,44 @@ var finances = [
 ];
 
 var total = 0;
+var total_month = 0
+
 console.log("  Financial Analysis");
 console.log("----------------------------");
-console.log(`Total months: ${finances.length}`);
+/*The total number of months included in the dataset. */
+total_month = finances.length;
+console.log(`Total months: ${total_month}`);
+
+
+/*The net total amount of Profit/Losses over the entire period.*/
 for(var i =0; i< finances.length; i++)
 {
     total += finances[i][1];
 }
-console.log(`Total:${total}`);
+console.log(`Total:$${total}`);
+
+/*The average of the **changes** in Profit/Losses over the entire period. */
+var temp_array = []
+total = 0;
+for(var i =0; i< finances.length-1; i++)
+{    
+    temp_array[i] = finances[i+1][1]- finances[i][1];  
+    total += temp_array[i];           
+}
+
+console.log(`Average Change: $${(total/temp_array.length).toFixed(2)}`);
+
+/* The greatest increase in profits (date and amount) over the entire period. */
+var largest = Math.max.apply(0, temp_array);
+var index = temp_array.indexOf(largest);
+console.log(`Greatest Increase in Profits:${finances[index+1][0]} ($${largest})`);
+
+/*The greatest decrease in losses (date and amount) over the entire period. */
+var lose_largest = Math.min.apply(0, temp_array);
+var index = temp_array.indexOf(lose_largest);
+console.log(`Greatest Decrease in Profits:${finances[index+1][0]} ($${lose_largest})`)
+
+
+
+
+
